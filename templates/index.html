@@ -32,7 +32,7 @@
         margin: 0;
         width: 100%;
         height: 400px;
-        font: 12px/normal Monaco,Menlo,'Ubuntu Mono',Consolas,source-code-pro,monospace;
+        font: 12px/normal 'Terminus (TTF)',Monaco,Menlo,'Ubuntu Mono',Consolas,source-code-pro,monospace;
       }
 
       .source {
@@ -51,6 +51,11 @@
         margin-bottom: 0;
         text-align: right;
       }
+
+      .comment {
+        font-size: small;
+        margin-top: 10px;
+      }
     </style>
   </head>
   <body>
@@ -58,15 +63,26 @@
       <div class="row">
         <div class="col-md-12">
           <h1>Black Online Demo</h1>
-          <p>Black is an <a href="https://github.com/ambv/black" target="_blank">open-source</a> Python code formatter by <a href="https://github.com/ambv" target="_blank">@ambv</a>. This is an example implementation.</p>
-          <p>Source code is available on <a target="_blank" href="https://github.com/jpadilla/black-online">GitHub</a>.</p>
+          <p>Black is the
+            <a href="http://black.readthedocs.io/en/latest/" target="_blank">
+              uncompromising Python code formatter</a>
+            by <a href="https://twitter.com/llanga" target="_blank">Łukasz Langa</a>.
+            This online demo brought to you by <a href="http://jpadilla.com">José Padilla</a>.
+            Source code is
+            <a target="_blank" href="https://github.com/jpadilla/black-online">
+              available on GitHub
+            </a>.</p>
+          </p>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-12">
           <blockquote>
-            <p>Black is the uncompromising Python code formatter. By using it, you agree to cease control over minutiae of hand-formatting. In return, Black gives you speed, determinism, and freedom from pycodestyle nagging about formatting. You will save time and mental energy for more important matters.</p>
+            By using Black, you agree to cease control over minutiae of
+            hand-formatting. In return, Black gives you speed, determinism, and
+            freedom from pycodestyle nagging about formatting. You will save
+            time and mental energy for more important matters.
           </blockquote>
         </div>
       </div>
@@ -107,12 +123,23 @@
           <div id="result" class="ace_editor ace-monokai ace_dark">{{ formatted }}</div>
         </div>
       </div>
+      <div class="row try-wrapper">
+        <div class="col-md-9 comment">
+          The recommended line length in Black is
+            <a href="http://black.readthedocs.io/en/latest/the_black_code_style.html#line-length" target="_blank">
+              88 characters</a>.
+            We adjusted it to 60 here to better illustrate line wrapping
+            behavior.
+        </div>
+      </div>
 
       <div class="footer">
         <p class="text-center">
-          This demo is not affiliated with Black or its authors in any way. <br>
           Hacked together by <a href="http://jpadilla.com">José Padilla</a>. <br>
           Built using black v{{ black_version }}.
+        </p>
+        <p class="text-center">
+          <code>pip install black</code>
         </p>
       </div>
     </div>
