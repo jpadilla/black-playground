@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Black Online Demo</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+      blockquote {
+        font-size: 14px;
+      }
+
+      .try-wrapper {
+        position: relative;
+      }
+
+      .arrow {
+        position: absolute;
+        left: 50%;
+        margin: -9px;
+        top: 40%;
+      }
+
+      #editor, #result {
+        margin: 0;
+        width: 100%;
+        height: 400px;
+        font: 12px/normal Monaco,Menlo,'Ubuntu Mono',Consolas,source-code-pro,monospace;
+      }
+
+      .source {
+        display: none;
+      }
+
+      .footer {
+        padding: 10px;
+        margin: 10px 0;
+        border-top: 1px solid #cccccc;
+        color: #7f7f7f;
+      }
+
+      .style-config-control label {
+        padding: 7px 0 0 0;
+        margin-bottom: 0;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Black Online Demo</h1>
+          <p>Black is an <a href="https://github.com/ambv/black" target="_blank">open-source</a> Python code formatter by <a href="https://github.com/ambv" target="_blank">@ambv</a>. This is an example implementation.</p>
+          <p>Source code is available on <a target="_blank" href="https://github.com/jpadilla/black-online">GitHub</a>.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <blockquote>
+            <p>Black is the uncompromising Python code formatter. By using it, you agree to cease control over minutiae of hand-formatting. In return, Black gives you speed, determinism, and freedom from pycodestyle nagging about formatting. You will save time and mental energy for more important matters.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      {% if error %}
+        <div class="row">
+          <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+              <strong>Oops!</strong> Exception: {{ error }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="row try-wrapper">
+        <span class="arrow glyphicon glyphicon-arrow-right"></span>
+        <div class="col-md-6">
+          <form action="" method="POST">
+            <div class="form-group">
+              <div id="editor" class="ace_editor ace-monokai ace_dark">{{ source }}</div>
+              <textarea class="source" name="source">{{ source }}</textarea>
+            </div>
+            <div class="form-group">
+              <div class="style-config-control col-md-5">
+                <label class="col-sm-5 control-label">Line Length</label>
+                <div class="col-md-7">
+                  <input type="text" name="line_length" class="form-control" value="{{ line_length }}">
+                </div>
+              </div>
+              <div class="col-md-7">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <div id="result" class="ace_editor ace-monokai ace_dark">{{ formatted }}</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p class="text-center">
+          This demo is not affiliated with Black or it's authors in any way. <br>
+          Hacked together by <a href="http://jpadilla.com">José Padilla</a>. <br>
+          Built using black v{{ black_version }}.
+        </p>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.getSession().setMode("ace/mode/python");
+
+        var result = ace.edit("result");
+        result.setTheme("ace/theme/monokai");
+        result.getSession().setMode("ace/mode/python");
+        result.setReadOnly(true);
+
+        var textarea = $('textarea[name="source"]');
+        editor.getSession().setValue(textarea.val());
+        editor.getSession().on('change', function(){
+          textarea.val(editor.getSession().getValue());
+        });
+      });
+    </script>
+  </body>
+</html>
