@@ -36,7 +36,7 @@ def index():
         line_length = int(request.form["line_length"])
 
     try:
-        formatted = black.format_str(SOURCE_CODE, line_length=line_length)
+        formatted = black.format_str(source, line_length=line_length)
         error = None
     except Exception as exc:
         formatted = ""
