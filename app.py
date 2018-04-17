@@ -5,7 +5,8 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-SOURCE_CODE = textwrap.dedent("""
+SOURCE_CODE = textwrap.dedent(
+    """
     x = {  'a':37,'b':42,
 
     'c':927}
@@ -21,35 +22,36 @@ SOURCE_CODE = textwrap.dedent("""
     def f  (   a ) :
       return      37-a[42-x :  y**3]
 
-    """)
+    """
+)
 
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route("/", methods=["POST", "GET"])
 def index():
     source = SOURCE_CODE
     line_length = 88
 
-    if request.method == 'POST':
-        source = request.form['source']
-        line_length = int(request.form['line_length'])
+    if request.method == "POST":
+        source = request.form["source"]
+        line_length = int(request.form["line_length"])
 
     try:
         formatted = black.format_str(SOURCE_CODE, line_length=line_length)
         error = None
     except Exception as exc:
-        formatted = ''
+        formatted = ""
         error = exc
 
     data = {
-        'source': source,
-        'formatted': formatted,
-        'line_length': line_length,
-        'error': error,
-        'black_version': black.__version__
+        "source": source,
+        "formatted": formatted,
+        "line_length": line_length,
+        "error": error,
+        "black_version": black.__version__,
     }
 
-    return render_template('index.html', **data)
+    return render_template("index.html", **data)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
