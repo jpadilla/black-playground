@@ -1,0 +1,25 @@
+{
+  "name": "black-online",
+  "version": "1.0.0",
+  "description": "Black is an [open-source](https://github.com/ambv/black) Python code formatter by [@ambv](https://github.com/ambv). This is an example implementation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpadilla/black-online.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpadilla/black-online/issues"
+  },
+  "homepage": "https://github.com/jpadilla/black-online#readme",
+  "devDependencies": {
+    "serverless-domain-manager": "^2.3.6",
+    "serverless-python-requirements": "^4.0.0",
+    "serverless-wsgi": "^1.4.7"
+  }
+}
