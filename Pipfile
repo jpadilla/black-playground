@@ -6,7 +6,7 @@ name = "pypi"
 [dev-packages]
 
 [packages]
-black = "==18.4a2"
+black = "==18.4a4"
 flask = "*"
 gunicorn = "*"
 
