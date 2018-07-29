@@ -1,5 +1,7 @@
 # Black Online Demo
 
+[![Build Status](https://travis-ci.com/jpadilla/black-online.svg?branch=master)](https://travis-ci.com/jpadilla/black-online) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
 Black is an [open-source](https://github.com/ambv/black) Python code formatter by [@ambv](https://github.com/ambv). This is an example implementation.
 
 [Check it out](https://black.now.sh).

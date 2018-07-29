@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.6"
+branches:
+  only:
+    - master
+install:
+  - pip install pipenv
+  - npm install -g now
+  - pipenv update
+script: now --token=$NOW_TOKEN --public
+after_script:
+  - now --token=$NOW_TOKEN alias
+  - now --token=$NOW_TOKEN remove --safe --yes black-demo

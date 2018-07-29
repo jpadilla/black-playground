@@ -6,9 +6,12 @@ name = "pypi"
 [dev-packages]
 
 [packages]
-black = "==18.6b1"
-flask = "*"
-gunicorn = "*"
+black = "*"
+flask = "==1.0.2"
+gunicorn = "==19.9.0"
 
 [requires]
 python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true
