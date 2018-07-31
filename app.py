@@ -12,13 +12,14 @@ from flask import (
     send_from_directory,
     render_template_string,
     redirect,
+    url_for,
 )
 
 app = Flask(__name__)
 
 
-def compress_state(state):
-    compressed = lzma.compress(json.dumps(state).encode("utf-8"))
+def compress_state(data):
+    compressed = lzma.compress(json.dumps(data).encode("utf-8"))
     return base64.urlsafe_b64encode(compressed).decode("utf-8")
 
 
@@ -28,7 +29,6 @@ def decompress_state(state):
 
 
 def format_code(source, line_length, skip_string_normalization, py36, pyi):
-    print(source)
     try:
         mode = black.FileMode.from_configuration(
             py36=py36, pyi=pyi, skip_string_normalization=skip_string_normalization
@@ -53,22 +53,46 @@ def index():
         skip_string_normalization = bool(request.form.get("skip_string_normalization"))
         py36 = bool(request.form.get("py36"))
         pyi = bool(request.form.get("pyi"))
-    else:
-        state = request.args.get("state")
 
-        if state:
-            state = decompress_state(state)
-            source = state.get("sc")
-            line_length = state.get("ll")
-            skip_string_normalization = state.get("ssn")
-            py36 = state.get("py36")
-            pyi = state.get("pyi")
-        else:
-            source = render_template("source.py")
-            line_length = 60
-            skip_string_normalization = False
-            py36 = False
-            pyi = False
+        state = compress_state(
+            {
+                "sc": source,
+                "ll": line_length,
+                "ssn": skip_string_normalization,
+                "py36": py36,
+                "pyi": pyi,
+            }
+        )
+
+        return redirect(url_for(".index", state=state))
+
+    state = request.args.get("state")
+
+    if not state:
+        source = render_template("source.py")
+        line_length = 60
+        skip_string_normalization = False
+        py36 = False
+        pyi = False
+
+        state = compress_state(
+            {
+                "sc": source,
+                "ll": line_length,
+                "ssn": skip_string_normalization,
+                "py36": py36,
+                "pyi": pyi,
+            }
+        )
+
+        return redirect(url_for(".index", state=state))
+
+    state = decompress_state(state)
+    source = state.get("sc")
+    line_length = state.get("ll")
+    skip_string_normalization = state.get("ssn")
+    py36 = state.get("py36")
+    pyi = state.get("pyi")
 
     formatted = format_code(source, line_length, skip_string_normalization, py36, pyi)
 
