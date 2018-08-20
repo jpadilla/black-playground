@@ -93,63 +93,10 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-    <script>
-      $(document).ready(function() {
-        var editor = ace.edit("editor"),
-            result = ace.edit("result"),
-            $textarea = $('textarea[name="source"]'),
-            $options = $('#options'),
-            $optionsButton = $('#options-button'),
-            $submitButton = $('#submit-button'),
-            $reportButton = $('#report-button'),
-            $form = $('form'),
-            $sourceInput = $form.find('[name=source]')
-
-        editor.setTheme("ace/theme/tomorrow_night");
-        editor.getSession().setMode("ace/mode/python");
-
-        result.setTheme("ace/theme/tomorrow_night");
-        result.getSession().setMode("ace/mode/python");
-        result.setReadOnly(true);
-
-        editor.getSession().setValue($textarea.val());
-        editor.getSession().on('change', function(){
-          $textarea.val(editor.getSession().getValue());
-        });
-
-        $optionsButton.click(function(e) {
-          e.preventDefault();
-          if ($options.hasClass('hidden')) {
-            $options.removeClass('hidden');
-            $optionsButton.addClass('bg-black text-white');
-          } else {
-            $options.addClass('hidden');
-            $optionsButton.removeClass('bg-black text-white');
-          }
-        });
-
-        $submitButton.click(function(e) {
-          e.preventDefault();
-          $form.attr('action', '').submit();
-        });
-
-        $reportButton.click(function(e) {
-          e.preventDefault();
-          $form.attr('action', '/report-issue').submit();
-        })
-      });
-    </script>
-
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-37217294-8"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-37217294-8', { 'anonymize_ip': true });
-    </script>
+    <script src="{{ url_for('static', filename='gtag.js') }}"></script>
 
   </body>
 </html>
