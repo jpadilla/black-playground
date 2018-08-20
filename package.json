@@ -1,25 +1,39 @@
 {
-  "name": "black-online",
-  "version": "1.0.0",
-  "description": "Black is an [open-source](https://github.com/ambv/black) Python code formatter by [@ambv](https://github.com/ambv). This is an example implementation.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/jpadilla/black-online/issues"
   },
+  "description": "Black is an [open-source](https://github.com/ambv/black) Python code formatter by [@ambv](https://github.com/ambv). This is an example implementation.",
+  "devDependencies": {
+    "husky": "^1.0.0-rc.13",
+    "lint-staged": "^7.2.2",
+    "prettier": "^1.14.2",
+    "serverless-domain-manager": "^2.3.6",
+    "serverless-python-requirements": "^4.0.0",
+    "serverless-wsgi": "^1.4.7"
+  },
+  "homepage": "https://black.now.sh",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "keywords": [],
+  "license": "MIT",
+  "lint-staged": {
+    "*.{js,json,css,md,yml,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "main": "index.js",
+  "name": "black-online",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpadilla/black-online.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jpadilla/black-online/issues"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/jpadilla/black-online#readme",
-  "devDependencies": {
-    "serverless-domain-manager": "^2.3.6",
-    "serverless-python-requirements": "^4.0.0",
-    "serverless-wsgi": "^1.4.7"
-  }
+  "version": "1.0.0"
 }
