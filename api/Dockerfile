@@ -6,9 +6,11 @@ WORKDIR /app
 
 COPY Pipfile Pipfile.lock /app/
 
-RUN pip install pipenv && \
+RUN apk add --no-cache --virtual .build-deps git && \
+    pip install pipenv && \
     pipenv install --deploy --system && \
     pip uninstall -y pipenv && \
+    apk del .build-deps && \
     rm -rf /root/.cache
 
 COPY . /app

@@ -1,4 +1,4 @@
-**Black v{{ black_version }}**
+**Black {{ version }}**
 
 [Playground link]({{ playground_link }})
 

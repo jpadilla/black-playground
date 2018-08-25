@@ -1,0 +1,11 @@
+{
+  "name": "black-api-master",
+  "alias": "black-api-master",
+  "type": "docker",
+  "features": {
+    "cloud": "v2"
+  },
+  "env": {
+    "BLACK_VERSION": "master"
+  }
+}

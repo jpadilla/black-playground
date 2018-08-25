@@ -1,0 +1,8 @@
+{
+  "name": "black",
+  "alias": "black",
+  "type": "docker",
+  "features": {
+    "cloud": "v2"
+  }
+}
