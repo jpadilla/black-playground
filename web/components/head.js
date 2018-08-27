@@ -2,9 +2,9 @@ import React from 'react';
 import NextHead from 'next/head';
 import { string } from 'prop-types';
 
-const defaultDescription = '';
-const defaultOGURL = '';
-const defaultOGImage = '';
+const DEFAULT_DESCRIPTION = 'Playground for Black, the uncompromising Python code formatter.';
+const DEFAULT_OG_URL = 'https://black.now.sh/';
+const DEFAULT_OG_IMAGE = 'https://black.now.sh/static/screenshot.png';
 
 const Head = (props) => (
   <NextHead>
@@ -12,23 +12,20 @@ const Head = (props) => (
     <title>{props.title || ''}</title>
     <meta
       name="description"
-      content={props.description || defaultDescription}
+      content={props.description || DEFAULT_DESCRIPTION}
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" sizes="192x192" href="/static/touch-icon.png" />
-    <link rel="apple-touch-icon" href="/static/touch-icon.png" />
-    <link rel="mask-icon" href="/static/favicon-mask.svg" color="#49B882" />
     <link rel="icon" href="/static/favicon.ico" />
-    <meta property="og:url" content={props.url || defaultOGURL} />
+    <meta property="og:url" content={props.url || DEFAULT_OG_URL} />
     <meta property="og:title" content={props.title || ''} />
     <meta
       property="og:description"
-      content={props.description || defaultDescription}
+      content={props.description || DEFAULT_DESCRIPTION}
     />
-    <meta name="twitter:site" content={props.url || defaultOGURL} />
+    <meta name="twitter:site" content={props.url || DEFAULT_OG_URL} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content={props.ogImage || defaultOGImage} />
-    <meta property="og:image" content={props.ogImage || defaultOGImage} />
+    <meta name="twitter:image" content={props.ogImage || DEFAULT_OG_IMAGE} />
+    <meta property="og:image" content={props.ogImage || DEFAULT_OG_IMAGE} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
   </NextHead>
