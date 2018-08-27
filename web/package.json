@@ -12,8 +12,9 @@
     "isomorphic-unfetch": "^2.1.1",
     "next": "^6.1.1",
     "react": "^16.4.2",
+    "react-ace": "^6.1.4",
     "react-dom": "^16.4.2",
-    "react-ace": "^6.1.4"
+    "react-ga": "^2.5.3"
   },
   "devDependencies": {
     "@zeit/next-css": "^0.2.0",

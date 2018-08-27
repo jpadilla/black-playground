@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
+import ReactGA from 'react-ga'
 import classNames from 'classnames';
 import Head from '../components/head';
 import Header from '../components/header';
@@ -71,6 +72,9 @@ export default class extends React.Component {
 
   componentDidMount() {
     this.updateStateParam();
+    ReactGA.initialize('UA-37217294-8');
+    ReactGA.set({ anonymizeIp: true });
+    ReactGA.pageview(window.location.pathname);
   }
 
   updateStateParam() {
