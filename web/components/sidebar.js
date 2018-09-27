@@ -24,7 +24,13 @@ export default class Sidebar extends Component {
     let {
       version,
       versions,
-      options: { line_length, skip_string_normalization, py36, pyi }
+      options: {
+        line_length,
+        skip_string_normalization,
+        skip_numeric_underscore_normalization,
+        py36,
+        pyi
+      }
     } = this.props;
 
     let latestUrl = `https://github.com/ambv/black/commit/${versions.master}`;
@@ -103,6 +109,19 @@ export default class Sidebar extends Component {
                 />
                 <span className="text-sm">
                   Don't normalize string quotes or prefixes.
+                </span>
+              </label>
+
+              <label className="block text-grey font-bold">
+                <input
+                  type="checkbox"
+                  name="skip_numeric_underscore_normalization"
+                  className="mr-2 leading-tight"
+                  value={skip_numeric_underscore_normalization}
+                  onChange={this.handleInputChange}
+                />
+                <span className="text-sm">
+                  Skip numeric literal underscore normalization.
                 </span>
               </label>
 
