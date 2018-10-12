@@ -7,6 +7,7 @@ WORKDIR /app
 COPY Pipfile Pipfile.lock /app/
 
 RUN apk add --no-cache --virtual .build-deps git && \
+    pip install pip==18.0 && \
     pip install pipenv && \
     pipenv install --deploy --system && \
     pip uninstall -y pipenv && \
