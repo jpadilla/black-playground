@@ -44,7 +44,7 @@ def format_code(source, line_length, configuration):
         mode = black.FileMode.from_configuration(**configuration)
         formatted = black.format_str(source, line_length=line_length, mode=mode)
     except Exception as exc:
-        formatted = exc
+        formatted = f"{exc}"
 
     return formatted
 
