@@ -9,19 +9,16 @@ branches:
 
 install:
   - pip install pip==18.0
-  - pip install pipenv==2018.7.1
-  - npm install -g now
+  - pip install pipenv==2018.11.26
+  - npm install -g now serverless
 
 script:
   - cd api
+  - npm install
   - pipenv update
-  - now --local-config=./now.stable.json --token=$NOW_TOKEN --public
-  - now --local-config=./now.stable.json --token=$NOW_TOKEN alias
-  - now --local-config=./now.stable.json --token=$NOW_TOKEN remove --safe --yes black-api-stable || true
+  - bin/deploy stable
   - pipenv install git+https://github.com/ambv/black.git#egg=black
-  - now --local-config=./now.master.json --token=$NOW_TOKEN --public
-  - now --local-config=./now.master.json --token=$NOW_TOKEN alias
-  - now --local-config=./now.master.json --token=$NOW_TOKEN remove --safe --yes black-api-master || true
+  - bin/deploy master
   - cd ../web
   - now --token=$NOW_TOKEN --public
   - now --token=$NOW_TOKEN alias

@@ -1,9 +1,8 @@
 {
-  "version": 1,
+  "version": 2,
   "name": "black",
   "alias": "black",
-  "type": "docker",
-  "features": {
-    "cloud": "v2"
-  }
+  "builds": [
+    { "src": "package.json", "use": "@now/next" }
+  ]
 }

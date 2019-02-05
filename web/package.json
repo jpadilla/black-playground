@@ -5,12 +5,13 @@
     "dev:css": "postcss styles/style.css --watch --config styles/config/postcss.config.js -o static/css/style.css",
     "build": "next build & yarn build:css",
     "build:css": "postcss styles/style.css --config styles/config/postcss.config.js -o static/css/style.css",
-    "start": "next start"
+    "start": "next start",
+    "now-build": "next build"
   },
   "dependencies": {
     "classnames": "^2.2.6",
     "isomorphic-unfetch": "^3.0.0",
-    "next": "^7.0.0",
+    "next": "^8.0.0-canary.17",
     "react": "^16.5.2",
     "react-ace": "^6.1.4",
     "react-dom": "^16.5.2",

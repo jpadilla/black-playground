@@ -1,0 +1,22 @@
+#!/bin/bash
+
+cd "$(dirname "$0")/.." || exit
+
+function cleanup {
+  if [ -e "serverless.yml" ]; then
+    echo "Removing serverless.yml"
+    rm -f serverless.yml
+  fi
+}
+
+trap cleanup EXIT
+
+if [ -z "$1" ]; then
+  echo "missing version"
+  exit 1
+fi
+
+version=$1
+
+cp "serverless.$version.yml" serverless.yml
+sls deploy

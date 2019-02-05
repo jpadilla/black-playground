@@ -1,0 +1,28 @@
+service: black-api-stable
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: us-east-1
+
+plugins:
+  - serverless-python-requirements
+  - serverless-wsgi
+
+custom:
+  wsgi:
+    app: app.app
+    packRequirements: false
+  pythonRequirements:
+    dockerizePip: non-linux
+    usePipenv: true
+
+functions:
+  app:
+    handler: wsgi_handler.handler
+    environment:
+      BLACK_VERSION: 'stable'
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
