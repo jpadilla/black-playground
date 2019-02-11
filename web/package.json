@@ -11,10 +11,10 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "isomorphic-unfetch": "^3.0.0",
-    "next": "^8.0.0-canary.17",
-    "react": "^16.5.2",
+    "next": "^8.0.0",
+    "react": "^16.6.0",
     "react-ace": "^6.1.4",
-    "react-dom": "^16.5.2",
+    "react-dom": "^16.6.0",
     "react-ga": "^2.5.3"
   },
   "devDependencies": {
