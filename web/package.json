@@ -9,6 +9,7 @@
     "now-build": "next build"
   },
   "dependencies": {
+    "awesome-debounce-promise": "^2.1.0",
     "classnames": "^2.2.6",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^8.0.0",

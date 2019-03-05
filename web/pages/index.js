@@ -1,4 +1,5 @@
 import 'isomorphic-unfetch';
+import debounce from 'awesome-debounce-promise';
 import React from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -88,10 +89,24 @@ export default class extends React.Component {
     }));
   };
 
-  handleSourceUpdate = (value) => {
+  handleSourceUpdate = async (value) => {
     this.setState(() => ({
-      source: value
+      source: value,
+      isLoading: true
     }));
+
+    const json = await this.fetchFormat();
+
+    this.setState(() => ({
+      isLoading: false,
+      source: json.source_code,
+      formatted: json.formatted_code,
+      options: json.options,
+      state: json.state,
+      issueLink: json.issue_link
+    }));
+
+    this.updateStateParam();
   };
 
   handleOptionsUpdate = (value) => {
@@ -106,12 +121,9 @@ export default class extends React.Component {
     });
   };
 
-  handleSubmit = async () => {
-    this.setState(() => ({ isLoading: true }));
-
-    let res = await fetch(
-      this.state.version === 'stable' ? STABLE_URL : MASTER_URL,
-      {
+  fetchFormat = debounce(
+    () =>
+      fetch(this.state.version === 'stable' ? STABLE_URL : MASTER_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -120,22 +132,9 @@ export default class extends React.Component {
           source: this.state.source,
           options: this.state.options
         })
-      }
-    );
-
-    let json = await res.json();
-
-    this.setState(() => ({
-      isLoading: false,
-      source: json.source_code,
-      formatted: json.formatted_code,
-      options: json.options,
-      state: json.state,
-      issueLink: json.issue_link
-    }));
-
-    this.updateStateParam();
-  };
+      }).then((res) => res.json()),
+    700
+  );
 
   render() {
     let currentVersion = this.state.versions[this.state.version];
@@ -181,40 +180,25 @@ export default class extends React.Component {
               </div>
             </div>
 
-            <div className="flex justify-between content-center items-center p-2 pl-4 pr-4">
+            <div className="flex justify-between content-center items-center py-1 px-4">
+              <button
+                className={classNames('text-sm inline-flex items-center', {
+                  'text-black': this.state.isSidebarVisible,
+                  'hover:text-grey-dark': this.state.isSidebarVisible,
+                  'text-grey-dark': !this.state.isSidebarVisible,
+                  'hover:text-black': !this.state.isSidebarVisible
+                })}
+                onClick={this.handleToggleSidebar}>
+                <Icon icon="cog" />
+              </button>
               <div className="flex text-right">
-                <Link href={this.state.issueLink}>
-                  <a className="bg-transparent text-sm text-black font-bold py-2 no-underline hover:underline">
-                    Report issue
-                  </a>
-                </Link>
-              </div>
-              <div className="flex text-right">
-                <button
-                  className={classNames(
-                    'hover:bg-black text-sm hover:text-white font-bold p-2 border-2 border-black rounded inline-flex items-center',
-                    {
-                      'bg-black': this.state.isSidebarVisible,
-                      'text-white': this.state.isSidebarVisible,
-                      'text-black': !this.state.isSidebarVisible,
-                      'bg-transparent': !this.state.isSidebarVisible
-                    }
-                  )}
-                  onClick={this.handleToggleSidebar}>
-                  <Icon icon="cog" />
-                </button>
-
-                <button
-                  className={classNames(
-                    'bg-transparent hover:bg-black text-black hover:text-white font-bold ml-2 px-4 border-2 border-black rounded',
-                    {
-                      'opacity-50': this.state.isLoading,
-                      'cursor-not-allowed': this.state.isLoading
-                    }
-                  )}
-                  onClick={this.handleSubmit}>
-                  Submit
-                </button>
+                <div className="flex text-right">
+                  <Link href={this.state.issueLink}>
+                    <a className="bg-transparent text-xs py-1 text-black font-bold no-underline hover:underline">
+                      Report issue
+                    </a>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

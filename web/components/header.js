@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Icon from './icon';
 
 const Head = (props) => (
-  <div className="flex justify-between content-center items-center pl-4 pr-4">
+  <div className="flex justify-between content-center items-center px-4">
     <div className="flex flex-col">
       <Link href="http://black.readthedocs.io/en/latest/">
         <a
