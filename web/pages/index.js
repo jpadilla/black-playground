@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga';
 import classNames from 'classnames';
 import Head from '../components/head';
 import Header from '../components/header';
@@ -181,10 +181,10 @@ export default class extends React.Component {
               </div>
             </div>
 
-            <div className="flex justify-between content-center items-center p-4">
+            <div className="flex justify-between content-center items-center p-2 pl-4 pr-4">
               <div className="flex text-right">
                 <Link href={this.state.issueLink}>
-                  <a className="bg-transparent text-sm text-black font-bold py-2 px-4 no-underline hover:underline">
+                  <a className="bg-transparent text-sm text-black font-bold py-2 no-underline hover:underline">
                     Report issue
                   </a>
                 </Link>
@@ -205,10 +205,13 @@ export default class extends React.Component {
                 </button>
 
                 <button
-                  className={classNames("bg-transparent hover:bg-black text-black hover:text-white font-bold ml-2 py-2 px-4 border-2 border-black rounded", {
-                    'opacity-50': this.state.isLoading,
-                    'cursor-not-allowed': this.state.isLoading
-                  })}
+                  className={classNames(
+                    'bg-transparent hover:bg-black text-black hover:text-white font-bold ml-2 px-4 border-2 border-black rounded',
+                    {
+                      'opacity-50': this.state.isLoading,
+                      'cursor-not-allowed': this.state.isLoading
+                    }
+                  )}
                   onClick={this.handleSubmit}>
                   Submit
                 </button>
