@@ -180,7 +180,7 @@ export default class extends React.Component {
               </div>
             </div>
 
-            <div className="flex justify-between content-center items-center py-1 px-4">
+            <div className="flex justify-between content-center items-center p-4">
               <button
                 className={classNames('text-sm inline-flex items-center', {
                   'text-black': this.state.isSidebarVisible,
