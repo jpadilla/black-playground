@@ -38,7 +38,7 @@ export default class Sidebar extends Component {
 
     return (
       <div
-        className={classNames('w-1/3', {
+        className={classNames('w-1/4', {
           hidden: !this.props.visible
         })}>
         <div className="p-4">
@@ -99,7 +99,7 @@ export default class Sidebar extends Component {
                 Other options
               </label>
 
-              <label className="block text-grey font-bold">
+              <label className="block text-grey-dark">
                 <input
                   type="checkbox"
                   name="skip_string_normalization"
@@ -112,7 +112,7 @@ export default class Sidebar extends Component {
                 </span>
               </label>
 
-              <label className="block text-grey font-bold">
+              <label className="block text-grey-dark">
                 <input
                   type="checkbox"
                   name="skip_numeric_underscore_normalization"
@@ -125,7 +125,7 @@ export default class Sidebar extends Component {
                 </span>
               </label>
 
-              <label className="block text-grey font-bold">
+              <label className="block text-grey-dark">
                 <input
                   type="checkbox"
                   name="py36"
@@ -138,7 +138,7 @@ export default class Sidebar extends Component {
                 </span>
               </label>
 
-              <label className="block text-grey font-bold">
+              <label className="block text-grey-dark">
                 <input
                   type="checkbox"
                   name="pyi"
