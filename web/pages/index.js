@@ -109,16 +109,33 @@ export default class extends React.Component {
     this.updateStateParam();
   };
 
-  handleOptionsUpdate = (value) => {
+  handleOptionsUpdate = async (value) => {
     this.setState((prevState) => {
       if (value.version) {
-        return { version: value.version };
+        return {
+          isLoading: true,
+          version: value.version
+        };
       }
 
       return {
+        isLoading: true,
         options: Object.assign({}, prevState.options, value)
       };
     });
+
+    const json = await this.fetchFormat();
+
+    this.setState(() => ({
+      isLoading: false,
+      source: json.source_code,
+      formatted: json.formatted_code,
+      options: json.options,
+      state: json.state,
+      issueLink: json.issue_link
+    }));
+
+    this.updateStateParam();
   };
 
   fetchFormat = debounce(
