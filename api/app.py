@@ -39,10 +39,10 @@ def decompress_state(state):
     return json.loads(lzma.decompress(compressed))
 
 
-def format_code(source, line_length, configuration):
+def format_code(source, configuration):
     try:
-        mode = black.FileMode.from_configuration(**configuration)
-        formatted = black.format_str(source, line_length=line_length, mode=mode)
+        mode = black.FileMode(**configuration)
+        formatted = black.format_str(source, mode=mode)
     except Exception as exc:
         formatted = f"{exc}"
 
@@ -60,9 +60,6 @@ def index():
         skip_string_normalization = bool(
             options.get("skip_string_normalization", False)
         )
-        skip_numeric_underscore_normalization = bool(
-            options.get("skip_numeric_underscore_normalization", False)
-        )
         py36 = bool(options.get("py36", False))
         pyi = bool(options.get("pyi", False))
 
@@ -74,25 +71,22 @@ def index():
             source = state.get("sc")
             line_length = state.get("ll")
             skip_string_normalization = state.get("ssn")
-            skip_numeric_underscore_normalization = state.get("snun")
             py36 = state.get("py36")
             pyi = state.get("pyi")
         else:
             source = render_template("source.py")
             line_length = 60
             skip_string_normalization = False
-            skip_numeric_underscore_normalization = False
             py36 = False
             pyi = False
 
     formatted = format_code(
         source,
-        line_length,
         configuration={
-            "py36": py36,
-            "pyi": pyi,
-            "skip_string_normalization": skip_string_normalization,
-            "skip_numeric_underscore_normalization": skip_numeric_underscore_normalization,
+            "target_versions": black.PY36_VERSIONS if py36 else set(),
+            "line_length": line_length,
+            "is_pyi": pyi,
+            "string_normalization": skip_string_normalization
         },
     )
 
@@ -101,7 +95,6 @@ def index():
             "sc": source,
             "ll": line_length,
             "ssn": skip_string_normalization,
-            "snun": skip_numeric_underscore_normalization,
             "py36": py36,
             "pyi": pyi,
         }
@@ -111,9 +104,6 @@ def index():
 
     if skip_string_normalization:
         options.append("`--skip-string-normalization`")
-
-    if skip_numeric_underscore_normalization:
-        options.append("`--skip-numeric-underscore-normalization`")
 
     if py36:
         options.append("`--py36`")
@@ -144,7 +134,6 @@ def index():
             "options": {
                 "line_length": line_length,
                 "skip_string_normalization": skip_string_normalization,
-                "skip_numeric_underscore_normalization": skip_numeric_underscore_normalization,
                 "py36": py36,
                 "pyi": pyi,
             },
