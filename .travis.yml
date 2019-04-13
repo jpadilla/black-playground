@@ -19,3 +19,7 @@ script:
   - bin/deploy stable
   - pipenv install git+https://github.com/ambv/black.git#egg=black
   - bin/deploy master
+  - cd ../web
+  - now --token=$NOW_TOKEN --public
+  - now --token=$NOW_TOKEN alias
+  - now --token=$NOW_TOKEN remove --safe --yes black || true
