@@ -104,6 +104,7 @@ export default class Sidebar extends Component {
                   type="checkbox"
                   name="skip_string_normalization"
                   className="mr-2 leading-tight"
+                  checked={skip_string_normalization}
                   value={skip_string_normalization}
                   onChange={this.handleInputChange}
                 />
@@ -117,6 +118,7 @@ export default class Sidebar extends Component {
                   type="checkbox"
                   name="skip_numeric_underscore_normalization"
                   className="mr-2 leading-tight"
+                  checked={skip_numeric_underscore_normalization}
                   value={skip_numeric_underscore_normalization}
                   onChange={this.handleInputChange}
                 />
@@ -130,6 +132,7 @@ export default class Sidebar extends Component {
                   type="checkbox"
                   name="py36"
                   className="mr-2 leading-tight"
+                  checked={py36}
                   value={py36}
                   onChange={this.handleInputChange}
                 />
@@ -143,6 +146,7 @@ export default class Sidebar extends Component {
                   type="checkbox"
                   name="pyi"
                   className="mr-2 leading-tight"
+                  checked={pyi}
                   value={pyi}
                   onChange={this.handleInputChange}
                 />
