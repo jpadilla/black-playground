@@ -27,7 +27,6 @@ export default class Sidebar extends Component {
       options: {
         line_length,
         skip_string_normalization,
-        skip_numeric_underscore_normalization,
         py36,
         pyi
       }
@@ -110,20 +109,6 @@ export default class Sidebar extends Component {
                 />
                 <span className="text-sm">
                   Don't normalize string quotes or prefixes.
-                </span>
-              </label>
-
-              <label className="block text-grey-dark">
-                <input
-                  type="checkbox"
-                  name="skip_numeric_underscore_normalization"
-                  className="mr-2 leading-tight"
-                  checked={skip_numeric_underscore_normalization}
-                  value={skip_numeric_underscore_normalization}
-                  onChange={this.handleInputChange}
-                />
-                <span className="text-sm">
-                  Skip numeric literal underscore normalization.
                 </span>
               </label>
 
