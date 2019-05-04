@@ -32,7 +32,7 @@ export default class Sidebar extends Component {
       }
     } = this.props;
 
-    let latestUrl = `https://github.com/ambv/black/commit/${versions.master}`;
+    let latestUrl = `https://github.com/python/black/commit/${versions.master}`;
     let stableUrl = `https://pypi.org/project/black/${versions.stable}/`;
 
     return (
