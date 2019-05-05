@@ -114,7 +114,7 @@ def index():
     if BLACK_VERSION == "stable":
         version = f"v{black_version}"
     else:
-        version = f"https://github.com/ambv/black/commit/{black_version}"
+        version = f"https://github.com/python/black/commit/{black_version}"
 
     issue_data = {
         "source_code": source,
@@ -125,7 +125,7 @@ def index():
     }
 
     issue_body = urllib.parse.quote_plus(render_template("issue.md", **issue_data))
-    issue_link = f"https://github.com/ambv/black/issues/new?body={issue_body}"
+    issue_link = f"https://github.com/python/black/issues/new?body={issue_body}"
 
     return jsonify(
         {
