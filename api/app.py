@@ -86,7 +86,7 @@ def index():
             "target_versions": black.PY36_VERSIONS if py36 else set(),
             "line_length": line_length,
             "is_pyi": pyi,
-            "string_normalization": skip_string_normalization
+            "string_normalization": not skip_string_normalization
         },
     )
 
