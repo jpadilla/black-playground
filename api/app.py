@@ -56,7 +56,7 @@ def index():
         data = request.get_json()
         source = data.get("source")
         options = data.get("options", {})
-        line_length = int(options.get("line_length", 60))
+        line_length = int(options.get("line_length", 88))
         skip_string_normalization = bool(
             options.get("skip_string_normalization", False)
         )
@@ -75,7 +75,7 @@ def index():
             pyi = state.get("pyi")
         else:
             source = render_template("source.py")
-            line_length = 60
+            line_length = 88
             skip_string_normalization = False
             py36 = False
             pyi = False
