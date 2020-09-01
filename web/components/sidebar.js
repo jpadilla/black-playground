@@ -28,7 +28,8 @@ export default class Sidebar extends Component {
         line_length,
         skip_string_normalization,
         py36,
-        pyi
+        pyi,
+        fast
       }
     } = this.props;
 
@@ -96,6 +97,20 @@ export default class Sidebar extends Component {
             <div className="w-full px-3 mb-6">
               <label className="block uppercase tracking-wide text-xs font-bold mb-2">
                 Other options
+              </label>
+
+              <label className="block text-grey-dark">
+                <input
+                  type="checkbox"
+                  name="fast"
+                  className="mr-2 leading-tight"
+                  checked={fast}
+                  value={fast}
+                  onChange={this.handleInputChange}
+                />
+                <span className="text-sm">
+                  Skip temporary sanity checks.
+                </span>
               </label>
 
               <label className="block text-grey-dark">

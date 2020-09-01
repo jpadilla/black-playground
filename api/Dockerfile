@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY Pipfile Pipfile.lock /app/
 
-RUN apk add --no-cache --virtual .build-deps git && \
+RUN apk add --no-cache --virtual .build-deps build-base git && \
     pip install pip==18.0 && \
     pip install pipenv==2018.7.1 && \
     pipenv install --deploy --system && \

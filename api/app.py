@@ -4,9 +4,12 @@ import base64
 import lzma
 import black
 import urllib
+import tempfile
 
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, jsonify
 from flask_cors import cross_origin
+
+TEMP_DIR = tempfile.gettempdir()
 
 BASE_URL = "https://black.now.sh"
 BLACK_VERSION = os.getenv("BLACK_VERSION")
@@ -39,12 +42,30 @@ def decompress_state(state):
     return json.loads(lzma.decompress(compressed))
 
 
-def format_code(source, configuration):
+def normalize_exception(exc):
+    exception_str = f"{exc}"
+
+    # Try to load contents dumped to tmp file.
+    if "helpful: " in exception_str:
+        try:
+            _, file_path = exception_str.split("helpful: ")
+
+            if file_path.startswith(TEMP_DIR):
+                with open(file_path) as f:
+                    contents = f.read()
+                    exception_str = f"{exception_str}\n\n{contents}"
+        except Exception:
+            pass
+
+    return exception_str
+
+
+def format_code(source, fast, configuration):
     try:
         mode = black.FileMode(**configuration)
-        formatted = black.format_str(source, mode=mode)
+        formatted = black.format_file_contents(source, fast=fast, mode=mode)
     except Exception as exc:
-        formatted = f"{exc}"
+        formatted = normalize_exception(exc)
 
     return formatted
 
@@ -62,6 +83,7 @@ def index():
         )
         py36 = bool(options.get("py36", False))
         pyi = bool(options.get("pyi", False))
+        fast = bool(options.get("fast", False))
 
     else:
         state = request.args.get("state")
@@ -73,20 +95,23 @@ def index():
             skip_string_normalization = state.get("ssn")
             py36 = state.get("py36")
             pyi = state.get("pyi")
+            fast = state.get("fast")
         else:
             source = render_template("source.py")
             line_length = 88
             skip_string_normalization = False
             py36 = False
             pyi = False
+            fast = False
 
     formatted = format_code(
         source,
+        fast=fast,
         configuration={
             "target_versions": black.PY36_VERSIONS if py36 else set(),
             "line_length": line_length,
             "is_pyi": pyi,
-            "string_normalization": not skip_string_normalization
+            "string_normalization": not skip_string_normalization,
         },
     )
 
@@ -97,6 +122,7 @@ def index():
             "ssn": skip_string_normalization,
             "py36": py36,
             "pyi": pyi,
+            "fast": fast,
         }
     )
 
@@ -110,6 +136,11 @@ def index():
 
     if pyi:
         options.append("`--pyi`")
+
+    if fast:
+        options.append("`--fast`")
+    else:
+        options.append("`--safe`")
 
     if BLACK_VERSION == "stable":
         version = f"v{black_version}"
@@ -136,6 +167,7 @@ def index():
                 "skip_string_normalization": skip_string_normalization,
                 "py36": py36,
                 "pyi": pyi,
+                "fast": fast,
             },
             "state": state,
             "issue_link": issue_link,
