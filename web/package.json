@@ -1,12 +1,12 @@
 {
-  "name": "create-next-example-app",
+  "name": "black-playground",
   "scripts": {
     "dev": "next & yarn dev:css",
     "dev:css": "postcss styles/style.css --watch --config styles/config/postcss.config.js -o static/css/style.css",
     "build": "next build & yarn build:css",
     "build:css": "postcss styles/style.css --config styles/config/postcss.config.js -o static/css/style.css",
     "start": "next start",
-    "now-build": "next build"
+    "now-build": "yarn build:css && next build"
   },
   "dependencies": {
     "awesome-debounce-promise": "^2.1.0",
