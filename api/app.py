@@ -64,6 +64,8 @@ def format_code(source, fast, configuration):
     try:
         mode = black.FileMode(**configuration)
         formatted = black.format_file_contents(source, fast=fast, mode=mode)
+    except black.NothingChanged:
+        formatted = source
     except Exception as exc:
         formatted = normalize_exception(exc)
 
