@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AceEditor from 'react-ace';
 
-import 'brace/mode/python';
-import 'brace/theme/tomorrow_night';
+import 'ace-builds/src-noconflict/mode-python';
+import 'ace-builds/src-noconflict/theme-tomorrow_night';
 
 export default class Editor extends Component {
   render() {

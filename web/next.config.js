@@ -1,6 +1,4 @@
-const withCSS = require('@zeit/next-css');
-
-module.exports = withCSS({
+module.exports = {
   target: 'serverless',
   webpack: (config) => {
     // Fixes npm packages that depend on `fs` module
@@ -10,4 +8,4 @@ module.exports = withCSS({
 
     return config;
   }
-});
+};
