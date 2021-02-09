@@ -11,6 +11,7 @@ gunicorn = "==20.0.4"
 flask-cors = "==3.0.9"
 Jinja2 = "==2.11.2"
 black = "*"
+Werkzeug = "==1.0.1"
 
 [requires]
 python_version = "3.8"
