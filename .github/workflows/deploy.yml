@@ -1,0 +1,46 @@
+---
+name: Deploy
+
+on:
+  push:
+    branches: ["master"]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: "actions/checkout@v2"
+
+      - uses: "actions/setup-python@v2"
+        with:
+          python-version: "3.x"
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: "Install dependencies"
+        run: |
+          python -VV
+          python -m site
+          python -m pip install --upgrade pip
+          python -m pip install pipenv==2018.11.26
+          npm install -g now serverless
+          cd api
+          npm install
+
+      - name: "Deploy stable"
+        run: |
+          cd api
+          pipenv update
+          bin/deploy stable
+
+      - name: "Deploy stable"
+        run: |
+          cd api
+          pipenv install git+https://github.com/ambv/black.git#egg=black
+          bin/deploy master
