@@ -1,6 +1,6 @@
 # Black Online Demo
 
-[![Build Status](https://travis-ci.com/jpadilla/black-playground.svg?branch=master)](https://travis-ci.com/jpadilla/black-playground) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
+[![Deploy](https://github.com/jpadilla/black-playground/actions/workflows/deploy.yml/badge.svg)](https://github.com/jpadilla/black-playground/actions/workflows/deploy.yml) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 
 Black is an [open-source](https://github.com/python/black) Python code formatter by [@ambv](https://github.com/ambv). This is an example implementation.
 
