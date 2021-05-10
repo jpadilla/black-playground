@@ -15,7 +15,7 @@ import Spinner from '../components/spinner';
 const Editor = dynamic(import('../components/editor'), { ssr: false });
 
 const STABLE_URL = 'https://1rctyledh3.execute-api.us-east-1.amazonaws.com/dev';
-const MASTER_URL = 'https://gpv8wwc892.execute-api.us-east-1.amazonaws.com/dev';
+const MAIN_URL = 'https://gpv8wwc892.execute-api.us-east-1.amazonaws.com/dev';
 
 async function getVersion(url) {
   let res = await (await fetch(`${url}/version`)).json();
@@ -40,21 +40,21 @@ export default class extends React.Component {
   }
 
   static async getInitialProps({ query }) {
-    let masterVersion;
+    let mainVersion;
     let stableVersion;
     let currentVersion = query.version || 'stable';
-    let url = currentVersion === 'master' ? MASTER_URL : STABLE_URL;
+    let url = currentVersion === 'main' ? MAIN_URL : STABLE_URL;
 
     let json = await (await fetch(
       `${url}${query.state ? `?state=${query.state}` : ''}`
     )).json();
 
-    if (currentVersion === 'master') {
-      masterVersion = json.version;
+    if (currentVersion === 'main') {
+      mainVersion = json.version;
       stableVersion = await getVersion(STABLE_URL);
     } else {
       stableVersion = json.version;
-      masterVersion = await getVersion(MASTER_URL);
+      mainVersion = await getVersion(MAIN_URL);
     }
 
     return {
@@ -66,7 +66,7 @@ export default class extends React.Component {
       version: currentVersion,
       versions: {
         stable: stableVersion,
-        master: masterVersion
+        main: mainVersion
       }
     };
   }
@@ -140,7 +140,7 @@ export default class extends React.Component {
 
   fetchFormat = debounce(
     () =>
-      fetch(this.state.version === 'stable' ? STABLE_URL : MASTER_URL, {
+      fetch(this.state.version === 'stable' ? STABLE_URL : MAIN_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

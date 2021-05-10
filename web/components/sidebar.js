@@ -33,7 +33,7 @@ export default class Sidebar extends Component {
       }
     } = this.props;
 
-    let latestUrl = `https://github.com/python/black/commit/${versions.master}`;
+    let latestUrl = `https://github.com/python/black/commit/${versions.main}`;
     let stableUrl = `https://pypi.org/project/black/${versions.stable}/`;
 
     return (
@@ -54,7 +54,7 @@ export default class Sidebar extends Component {
                   value={version}
                   onChange={this.handleInputChange}>
                   <option value="stable">Stable</option>
-                  <option value="master">Master</option>
+                  <option value="main">Main</option>
                 </select>
                 <div className="pointer-events-none absolute pin-y pin-r flex items-center px-2">
                   <Icon icon="chevron-down" />
@@ -65,9 +65,9 @@ export default class Sidebar extends Component {
                 <a target="_blank" className="text-grey-dark" href={stableUrl}>
                   {versions.stable}
                 </a>{' '}
-                | Master:{' '}
+                | Main:{' '}
                 <a target="_blank" className="text-grey-dark" href={latestUrl}>
-                  @{versions.master}
+                  @{versions.main}
                 </a>
               </p>
             </div>
