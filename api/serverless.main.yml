@@ -1,4 +1,4 @@
-service: black-api-master
+service: black-api-main
 
 provider:
   name: aws
@@ -22,7 +22,7 @@ functions:
   app:
     handler: wsgi_handler.handler
     environment:
-      BLACK_VERSION: 'master'
+      BLACK_VERSION: 'main'
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
