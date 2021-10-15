@@ -14,7 +14,7 @@ else:
  a = 'hello {}'.format(world)
  f = rf'hello {world}'
 if (this
-and that): y = 'hello ''world'#FIXME: https://github.com/python/black/issues/26
+and that): y = 'hello ''world'#FIXME: https://github.com/psf/black/issues/26
 class Foo  (     object  ):
   def f    (self   ):
     return       37*-2
