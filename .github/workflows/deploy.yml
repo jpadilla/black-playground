@@ -27,7 +27,7 @@ jobs:
         run: |
           python -VV
           python -m pip install --upgrade pip
-          python -m pip install pipenv==2018.11.26
+          python -m pip install pipenv==2021.5.29
           npm install -g serverless
           cd api
           npm install
