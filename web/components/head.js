@@ -3,8 +3,8 @@ import NextHead from 'next/head';
 import { string } from 'prop-types';
 
 const DEFAULT_DESCRIPTION = 'Playground for Black, the uncompromising Python code formatter.';
-const DEFAULT_OG_URL = 'https://black.now.sh/';
-const DEFAULT_OG_IMAGE = 'https://black.now.sh/static/screenshot.png';
+const DEFAULT_OG_URL = 'https://black.vercel.sh/';
+const DEFAULT_OG_IMAGE = 'https://black.vercel.sh/static/screenshot.png';
 
 const Head = (props) => (
   <NextHead>

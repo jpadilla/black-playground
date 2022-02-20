@@ -11,7 +11,7 @@ from flask_cors import cross_origin
 
 TEMP_DIR = tempfile.gettempdir()
 
-BASE_URL = "https://black.now.sh"
+BASE_URL = "https://black.vercel.app"
 BLACK_VERSION = os.getenv("BLACK_VERSION")
 
 

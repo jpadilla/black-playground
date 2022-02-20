@@ -4,6 +4,6 @@
 
 Black is an [open-source](https://github.com/psf/black) Python code formatter by [@ambv](https://github.com/ambv). This is an example implementation.
 
-[Check it out](https://black.now.sh).
+[Check it out](https://black.vercel.app).
 
-[![black-playground-demo](https://user-images.githubusercontent.com/83319/116288177-3ce05a80-a75f-11eb-9493-b580eaba2537.gif)](https://black.now.sh)
+[![black-playground-demo](https://user-images.githubusercontent.com/83319/116288177-3ce05a80-a75f-11eb-9493-b580eaba2537.gif)](https://black.vercel.app)
