@@ -3,12 +3,23 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Icon from './icon';
 
+const TARGET_VERSIONS = {
+  py33: 'Python 3.3',
+  py34: 'Python 3.4',
+  py35: 'Python 3.5',
+  py36: 'Python 3.6',
+  py37: 'Python 3.7',
+  py38: 'Python 3.8',
+  py39: 'Python 3.9',
+  py310: 'Python 3.10',
+};
+
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      options: {}
+      options: {},
     };
   }
 
@@ -20,18 +31,32 @@ export default class Sidebar extends Component {
     this.props.onChange({ [name]: value });
   };
 
+  handleTargetVersionChange = (event) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    let targetVersions = this.props.options.target_versions || [];
+    if (value) {
+      targetVersions.push(name);
+    } else {
+      targetVersions = targetVersions.filter((t) => t !== name);
+    }
+
+    this.props.onChange({ target_versions: [...new Set(targetVersions)] });
+  };
+
   render() {
+    let { version, versions, options } = this.props;
+
     let {
-      version,
-      versions,
-      options: {
-        line_length,
-        skip_string_normalization,
-        py36,
-        pyi,
-        fast
-      }
-    } = this.props;
+      line_length,
+      skip_string_normalization,
+      skip_magic_trailing_comma,
+      target_versions = [],
+      pyi,
+      fast,
+      preview,
+    } = options;
 
     let latestUrl = `https://github.com/psf/black/commit/${versions.main}`;
     let stableUrl = `https://pypi.org/project/black/${versions.stable}/`;
@@ -39,7 +64,7 @@ export default class Sidebar extends Component {
     return (
       <div
         className={classNames('w-1/4', {
-          hidden: !this.props.visible
+          hidden: !this.props.visible,
         })}>
         <div className="p-4">
           <div className="flex flex-wrap">
@@ -96,6 +121,26 @@ export default class Sidebar extends Component {
 
             <div className="w-full px-3 mb-6">
               <label className="block uppercase tracking-wide text-xs font-bold mb-2">
+                Target versions
+              </label>
+
+              {Object.keys(TARGET_VERSIONS).map((target) => (
+                <label className="block text-grey-dark" key={target}>
+                  <input
+                    type="checkbox"
+                    name={target}
+                    className="mr-2 leading-tight"
+                    checked={target_versions.includes(target)}
+                    value={true}
+                    onChange={this.handleTargetVersionChange}
+                  />
+                  <span className="text-sm">{TARGET_VERSIONS[target]}</span>
+                </label>
+              ))}
+            </div>
+
+            <div className="w-full px-3 mb-6">
+              <label className="block uppercase tracking-wide text-xs font-bold mb-2">
                 Other options
               </label>
 
@@ -108,9 +153,7 @@ export default class Sidebar extends Component {
                   value={fast}
                   onChange={this.handleInputChange}
                 />
-                <span className="text-sm">
-                  Skip temporary sanity checks.
-                </span>
+                <span className="text-sm">Skip temporary sanity checks.</span>
               </label>
 
               <label className="block text-grey-dark">
@@ -130,14 +173,14 @@ export default class Sidebar extends Component {
               <label className="block text-grey-dark">
                 <input
                   type="checkbox"
-                  name="py36"
+                  name="skip_magic_trailing_comma"
                   className="mr-2 leading-tight"
-                  checked={py36}
-                  value={py36}
+                  checked={skip_magic_trailing_comma}
+                  value={skip_magic_trailing_comma}
                   onChange={this.handleInputChange}
                 />
                 <span className="text-sm">
-                  Allow using Python 3.6-only syntax
+                  Don't use trailing commas as a reason to split lines.
                 </span>
               </label>
 
@@ -152,6 +195,21 @@ export default class Sidebar extends Component {
                 />
                 <span className="text-sm">Format typing stubs</span>
               </label>
+
+              <label className="block text-grey-dark">
+                <input
+                  type="checkbox"
+                  name="preview"
+                  className="mr-2 leading-tight"
+                  checked={preview}
+                  value={preview}
+                  onChange={this.handleInputChange}
+                />
+                <span className="text-sm">
+                  Enable potentially disruptive style changes that may be added
+                  to Black's main functionality in the next major release.
+                </span>
+              </label>
             </div>
           </div>
         </div>
@@ -165,7 +223,7 @@ Sidebar.propTypes = {
   versions: PropTypes.object,
   version: PropTypes.string,
   options: PropTypes.object,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 };
 
 Sidebar.defaultProps = {
@@ -173,5 +231,5 @@ Sidebar.defaultProps = {
   versions: {},
   version: null,
   options: {},
-  onChange: null
+  onChange: null,
 };

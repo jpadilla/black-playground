@@ -35,7 +35,7 @@ export default class extends React.Component {
       version: props.version,
       versions: props.versions,
       state: props.state,
-      issueLink: props.issueLink
+      issueLink: props.issueLink,
     };
   }
 
@@ -45,9 +45,9 @@ export default class extends React.Component {
     let currentVersion = query.version || 'stable';
     let url = currentVersion === 'main' ? MAIN_URL : STABLE_URL;
 
-    let json = await (await fetch(
-      `${url}${query.state ? `?state=${query.state}` : ''}`
-    )).json();
+    let json = await (
+      await fetch(`${url}${query.state ? `?state=${query.state}` : ''}`)
+    ).json();
 
     if (currentVersion === 'main') {
       mainVersion = json.version;
@@ -66,8 +66,8 @@ export default class extends React.Component {
       version: currentVersion,
       versions: {
         stable: stableVersion,
-        main: mainVersion
-      }
+        main: mainVersion,
+      },
     };
   }
 
@@ -76,6 +76,11 @@ export default class extends React.Component {
     ReactGA.initialize('UA-37217294-8');
     ReactGA.set({ anonymizeIp: true });
     ReactGA.pageview(window.location.pathname);
+
+    if (typeof window !== 'undefined') {
+      this.state.isSidebarVisible =
+        localStorage.getItem('sidebar:visible') === 'true';
+    }
   }
 
   updateStateParam() {
@@ -85,14 +90,18 @@ export default class extends React.Component {
 
   handleToggleSidebar = () => {
     this.setState((prevState) => ({
-      isSidebarVisible: !prevState.isSidebarVisible
+      isSidebarVisible: !prevState.isSidebarVisible,
     }));
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('sidebar:visible', !this.state.isSidebarVisible);
+    }
   };
 
   handleSourceUpdate = async (value) => {
     this.setState(() => ({
       source: value,
-      isLoading: true
+      isLoading: true,
     }));
 
     const json = await this.fetchFormat();
@@ -103,7 +112,7 @@ export default class extends React.Component {
       formatted: json.formatted_code,
       options: json.options,
       state: json.state,
-      issueLink: json.issue_link
+      issueLink: json.issue_link,
     }));
 
     this.updateStateParam();
@@ -114,13 +123,13 @@ export default class extends React.Component {
       if (value.version) {
         return {
           isLoading: true,
-          version: value.version
+          version: value.version,
         };
       }
 
       return {
         isLoading: true,
-        options: Object.assign({}, prevState.options, value)
+        options: Object.assign({}, prevState.options, value),
       };
     });
 
@@ -132,7 +141,7 @@ export default class extends React.Component {
       formatted: json.formatted_code,
       options: json.options,
       state: json.state,
-      issueLink: json.issue_link
+      issueLink: json.issue_link,
     }));
 
     this.updateStateParam();
@@ -143,12 +152,12 @@ export default class extends React.Component {
       fetch(this.state.version === 'stable' ? STABLE_URL : MAIN_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           source: this.state.source,
-          options: this.state.options
-        })
+          options: this.state.options,
+        }),
       }).then((res) => res.json()),
     700
   );
@@ -203,7 +212,7 @@ export default class extends React.Component {
                   'text-black': this.state.isSidebarVisible,
                   'hover:text-grey-dark': this.state.isSidebarVisible,
                   'text-grey-dark': !this.state.isSidebarVisible,
-                  'hover:text-black': !this.state.isSidebarVisible
+                  'hover:text-black': !this.state.isSidebarVisible,
                 })}
                 onClick={this.handleToggleSidebar}>
                 <Icon icon="cog" />

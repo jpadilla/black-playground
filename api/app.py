@@ -6,6 +6,7 @@ import black
 import urllib
 import tempfile
 
+from black.mode import TargetVersion
 from flask import Flask, render_template, request, jsonify
 from flask_cors import cross_origin
 
@@ -13,6 +14,8 @@ TEMP_DIR = tempfile.gettempdir()
 
 BASE_URL = "https://black.vercel.app"
 BLACK_VERSION = os.getenv("BLACK_VERSION")
+
+TARGET_VERSIONS = {v.name.lower(): v for v in TargetVersion}
 
 
 def get_black_version():
@@ -83,9 +86,14 @@ def index():
         skip_string_normalization = bool(
             options.get("skip_string_normalization", False)
         )
+        skip_magic_trailing_comma = bool(
+            options.get("skip_magic_trailing_comma", False)
+        )
+        preview = options.get("preview", False)
         py36 = bool(options.get("py36", False))
         pyi = bool(options.get("pyi", False))
         fast = bool(options.get("fast", False))
+        target_versions = options.get("target_versions", set())
 
     else:
         state = request.args.get("state")
@@ -95,25 +103,36 @@ def index():
             source = state.get("sc")
             line_length = state.get("ll")
             skip_string_normalization = state.get("ssn")
+            skip_magic_trailing_comma = state.get("smtc")
             py36 = state.get("py36")
             pyi = state.get("pyi")
             fast = state.get("fast")
+            preview = state.get("prv")
+            target_versions = state.get("tv", set())
         else:
             source = render_template("source.py")
             line_length = 88
             skip_string_normalization = False
+            skip_magic_trailing_comma = False
             py36 = False
             pyi = False
             fast = False
+            preview = False
+            target_versions = set()
+
+    if py36:
+        target_versions.add(TargetVersion.PY36)
 
     formatted = format_code(
         source,
         fast=fast,
         configuration={
-            "target_versions": black.PY36_VERSIONS if py36 else set(),
+            "target_versions": {TARGET_VERSIONS[t] for t in target_versions},
             "line_length": line_length,
             "is_pyi": pyi,
             "string_normalization": not skip_string_normalization,
+            "magic_trailing_comma": not skip_magic_trailing_comma,
+            "preview": preview,
         },
     )
 
@@ -122,9 +141,11 @@ def index():
             "sc": source,
             "ll": line_length,
             "ssn": skip_string_normalization,
-            "py36": py36,
+            "smtc": skip_magic_trailing_comma,
             "pyi": pyi,
             "fast": fast,
+            "prv": preview,
+            "tv": list(target_versions),
         }
     )
 
@@ -132,6 +153,9 @@ def index():
 
     if skip_string_normalization:
         options.append("`--skip-string-normalization`")
+
+    if skip_magic_trailing_comma:
+        options.append("`--skip-magic-trailing-comma`")
 
     if py36:
         options.append("`--py36`")
@@ -144,10 +168,16 @@ def index():
     else:
         options.append("`--safe`")
 
+    if preview:
+        options.append("`--preview`")
+
     if BLACK_VERSION == "stable":
         version = f"v{black_version}"
     else:
         version = f"https://github.com/psf/black/commit/{black_version}"
+
+    for target_version in target_versions:
+        options.append(f"`--target-version={target_version}`")
 
     issue_data = {
         "source_code": source,
@@ -167,9 +197,11 @@ def index():
             "options": {
                 "line_length": line_length,
                 "skip_string_normalization": skip_string_normalization,
-                "py36": py36,
+                "skip_magic_trailing_comma": skip_magic_trailing_comma,
+                "target_versions": list(target_versions),
                 "pyi": pyi,
                 "fast": fast,
+                "preview": preview,
             },
             "state": state,
             "issue_link": issue_link,
