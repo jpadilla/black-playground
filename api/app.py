@@ -89,7 +89,7 @@ def index():
         skip_magic_trailing_comma = bool(
             options.get("skip_magic_trailing_comma", False)
         )
-        preview = options.get("preview", False)
+        preview = bool(options.get("preview", False))
         py36 = bool(options.get("py36", False))
         pyi = bool(options.get("pyi", False))
         fast = bool(options.get("fast", False))
@@ -100,14 +100,14 @@ def index():
 
         if state:
             state = decompress_state(state)
-            source = state.get("sc")
-            line_length = state.get("ll")
-            skip_string_normalization = state.get("ssn")
-            skip_magic_trailing_comma = state.get("smtc")
-            py36 = state.get("py36")
-            pyi = state.get("pyi")
-            fast = state.get("fast")
-            preview = state.get("prv")
+            source = state.get("sc", render_template("source.py"))
+            line_length = int(state.get("ll", 88))
+            skip_string_normalization = bool(state.get("ssn", False))
+            skip_magic_trailing_comma = bool(state.get("smtc", False))
+            preview = bool(state.get("prv", False))
+            py36 = bool(state.get("py36", False))
+            pyi = bool(state.get("pyi", False))
+            fast = bool(state.get("fast", False))
             target_versions = state.get("tv", set())
         else:
             source = render_template("source.py")
