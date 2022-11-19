@@ -4,6 +4,7 @@ import AceEditor from 'react-ace';
 
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-tomorrow_night';
+import 'ace-builds/src-min-noconflict/ext-searchbox';
 
 export default class Editor extends Component {
   render() {
