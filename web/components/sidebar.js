@@ -12,6 +12,8 @@ const TARGET_VERSIONS = {
   py38: 'Python 3.8',
   py39: 'Python 3.9',
   py310: 'Python 3.10',
+  py311: 'Python 3.11',
+  py312: 'Python 3.12',
 };
 
 export default class Sidebar extends Component {
