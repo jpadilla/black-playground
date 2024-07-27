@@ -2,7 +2,7 @@ service: black-api-stable
 
 provider:
   name: aws
-  runtime: python3.9
+  runtime: python3.12
   stage: dev
   region: us-east-1
 
