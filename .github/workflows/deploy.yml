@@ -13,21 +13,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: "actions/checkout@v2"
+      - uses: "actions/checkout@v4"
 
-      - uses: "actions/setup-python@v2"
+      - uses: "actions/setup-python@v5"
         with:
-          python-version: "3.9"
+          python-version: "3.*"
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '18'
 
       - name: "Install dependencies"
         run: |
           python -VV
           python -m pip install --upgrade pip
-          python -m pip install pipenv==2021.5.29
+          python -m pip install pipenv
           npm install -g serverless
           cd api
           npm install
@@ -36,6 +36,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
         run: |
           cd api
           pipenv update
@@ -45,6 +46,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
         run: |
           cd api
           pipenv install git+https://github.com/psf/black.git#egg=black

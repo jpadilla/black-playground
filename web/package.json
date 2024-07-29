@@ -1,27 +1,27 @@
 {
   "name": "black-playground",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "ace-builds": "^1.4.12",
-    "awesome-debounce-promise": "^2.1.0",
-    "classnames": "^2.2.6",
-    "encoding": "^0.1.13",
-    "isomorphic-unfetch": "^3.1.0",
-    "next": "^10.0.6",
-    "react": "^17.0.1",
-    "react-ace": "^9.3.0",
-    "react-dom": "^17.0.1",
-    "react-ga": "^3.3.0"
+    "@tailwindcss/forms": "^0.5.7",
+    "ace-builds": "^1.35.4",
+    "classnames": "^2.5.1",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-ace": "^12.0.0",
+    "react-dom": "^18",
+    "usehooks-ts": "^3.1.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.2.4",
-    "cssnano": "^4.1.0",
-    "postcss": "^8.2.10",
-    "postcss-import": "^14.0.0",
-    "tailwindcss": "^0.7.4"
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
   }
 }
