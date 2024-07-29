@@ -1,9 +1,11 @@
-const BASE_URL = process.env.VERCEL_URL || 'http://localhost:3000'
+const BASE_URL = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : 'http://localhost:3000';
 const STABLE_URL = `${BASE_URL}/api/stable`;
 const MAIN_URL = `${BASE_URL}/api/latest`;
 
 function urlByVersion(v) {
-  return v === 'stable' ? STABLE_URL : MAIN_URL
+  return v === 'stable' ? STABLE_URL : MAIN_URL;
 }
 
 export async function getStableVersion() {
@@ -18,11 +20,7 @@ export async function getLatestVersion() {
 
 export async function loadState(version, state) {
   return await (
-    await fetch(
-      `${(urlByVersion(version))}${
-        state ? `?state=${state}` : ''
-      }`
-    )
+    await fetch(`${urlByVersion(version)}${state ? `?state=${state}` : ''}`)
   ).json();
 }
 
