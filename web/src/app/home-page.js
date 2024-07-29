@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import classNames from 'classnames';
-import { useDebounceValue, useLocalStorage } from 'usehooks-ts';
+import { useDebounceValue } from 'usehooks-ts';
 import Header from '../components/header';
 import Sidebar from '../components/sidebar';
 import Icon from '../components/icon';
@@ -25,13 +25,24 @@ export default function HomePage({ props }) {
   const [options, setOptions] = useState(props.options);
   const [state, setState] = useState(props.state);
   const [issueLink, setIssueLink] = useState(props.issueLink);
-  const [debouncedSource,] = useDebounceValue(source, 100);
-  const [debouncedOptions,] = useDebounceValue(options, 100);
-  const [debouncedVersion,] = useDebounceValue(version, 100);
-  const [isSidebarVisible, setIsSidebarVisible] = useLocalStorage(
-    'sidebar:visible',
-    false
-  );
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [debouncedSource] = useDebounceValue(source, 100);
+  const [debouncedOptions] = useDebounceValue(options, 100);
+  const [debouncedVersion] = useDebounceValue(version, 100);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('sidebar:visible') === 'true') {
+        setIsSidebarVisible(true);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('sidebar:visible', isSidebarVisible);
+    }
+  }, [isSidebarVisible]);
 
   useEffect(() => {
     const href = `/?version=${version}&state=${state}`;
