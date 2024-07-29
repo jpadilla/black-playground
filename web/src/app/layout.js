@@ -3,7 +3,7 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const DEFAULT_OG_IMAGE = 'https://black.vercel.app/static/screenshot.png';
+const DEFAULT_OG_IMAGE = 'https://black.vercel.app/screenshot.png';
 
 export const metadata = {
   title: 'Black Playground',
