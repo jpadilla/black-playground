@@ -83,6 +83,9 @@ def index():
         source = data.get("source")
         options = data.get("options", {})
         line_length = int(options.get("line_length", 88))
+        skip_source_first_line = bool(
+            options.get("skip_source_first_line", False)
+        )
         skip_string_normalization = bool(
             options.get("skip_string_normalization", False)
         )
@@ -90,6 +93,7 @@ def index():
             options.get("skip_magic_trailing_comma", False)
         )
         preview = bool(options.get("preview", False))
+        unstable = bool(options.get("unstable", False))
         py36 = bool(options.get("py36", False))
         pyi = bool(options.get("pyi", False))
         fast = bool(options.get("fast", False))
@@ -102,9 +106,11 @@ def index():
             state = decompress_state(state)
             source = state.get("sc", render_template("source.py"))
             line_length = int(state.get("ll", 88))
+            skip_source_first_line = bool(state.get("ssfl", False))
             skip_string_normalization = bool(state.get("ssn", False))
             skip_magic_trailing_comma = bool(state.get("smtc", False))
             preview = bool(state.get("prv", False))
+            unstable = bool(state.get("usb", False))
             py36 = bool(state.get("py36", False))
             pyi = bool(state.get("pyi", False))
             fast = bool(state.get("fast", False))
@@ -112,12 +118,14 @@ def index():
         else:
             source = render_template("source.py")
             line_length = 88
+            skip_source_first_line = False
             skip_string_normalization = False
             skip_magic_trailing_comma = False
             py36 = False
             pyi = False
             fast = False
             preview = False
+            unstable = False
             target_versions = set()
 
     if py36:
@@ -130,9 +138,11 @@ def index():
             "target_versions": {TARGET_VERSIONS[t] for t in target_versions},
             "line_length": line_length,
             "is_pyi": pyi,
+            "skip_source_first_line": skip_source_first_line,
             "string_normalization": not skip_string_normalization,
             "magic_trailing_comma": not skip_magic_trailing_comma,
             "preview": preview,
+            "unstable": unstable,
         },
     )
 
@@ -140,16 +150,21 @@ def index():
         {
             "sc": source,
             "ll": line_length,
+            "ssfl": skip_source_first_line,
             "ssn": skip_string_normalization,
             "smtc": skip_magic_trailing_comma,
             "pyi": pyi,
             "fast": fast,
             "prv": preview,
+            "usb": unstable,
             "tv": list(target_versions),
         }
     )
 
     options = [f"`--line-length={line_length}`"]
+
+    if skip_source_first_line:
+        options.append("`--skip-source-first-line`")
 
     if skip_string_normalization:
         options.append("`--skip-string-normalization`")
@@ -170,6 +185,9 @@ def index():
 
     if preview:
         options.append("`--preview`")
+
+    if unstable:
+        options.append("`--unstable`")
 
     if BLACK_VERSION == "stable":
         version = f"v{black_version}"
@@ -196,12 +214,14 @@ def index():
             "formatted_code": formatted,
             "options": {
                 "line_length": line_length,
+                "skip_source_first_line": skip_source_first_line,
                 "skip_string_normalization": skip_string_normalization,
                 "skip_magic_trailing_comma": skip_magic_trailing_comma,
                 "target_versions": list(target_versions),
                 "pyi": pyi,
                 "fast": fast,
                 "preview": preview,
+                "unstable": unstable,
             },
             "state": state,
             "issue_link": issue_link,
