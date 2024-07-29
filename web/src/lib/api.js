@@ -1,5 +1,5 @@
-const BASE_URL = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
+const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   : 'http://localhost:3000';
 const STABLE_URL = `${BASE_URL}/api/stable`;
 const MAIN_URL = `${BASE_URL}/api/latest`;
