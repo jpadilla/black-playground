@@ -25,9 +25,9 @@ export default function HomePage({ props }) {
   const [options, setOptions] = useState(props.options);
   const [state, setState] = useState(props.state);
   const [issueLink, setIssueLink] = useState(props.issueLink);
-  const debouncedSource = useDebounceValue(source, 100);
-  const debouncedOptions = useDebounceValue(options, 100);
-  const debouncedVersion = useDebounceValue(version, 100);
+  const [debouncedSource,] = useDebounceValue(source, 100);
+  const [debouncedOptions,] = useDebounceValue(options, 100);
+  const [debouncedVersion,] = useDebounceValue(version, 100);
   const [isSidebarVisible, setIsSidebarVisible] = useLocalStorage(
     'sidebar:visible',
     false

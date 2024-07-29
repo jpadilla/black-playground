@@ -1,5 +1,6 @@
-const STABLE_URL = 'https://1rctyledh3.execute-api.us-east-1.amazonaws.com/dev';
-const MAIN_URL = 'https://jobmcemp35.execute-api.us-east-1.amazonaws.com/dev';
+const BASE_URL = process.env.VERCEL_URL || 'http://localhost:3000'
+const STABLE_URL = `${BASE_URL}/api/stable`;
+const MAIN_URL = `${BASE_URL}/api/latest`;
 
 function urlByVersion(v) {
   return v === 'stable' ? STABLE_URL : MAIN_URL
