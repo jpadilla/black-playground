@@ -76,7 +76,7 @@ export default class Sidebar extends Component {
         <div className="p-4">
           <div className="flex flex-wrap">
             <div className="w-full px-3 mb-6">
-              <label className="block uppercase tracking-wide text-xs font-bold mb-2">
+              <label className="block uppercase tracking-wide text-xs font-bold mb-2" for="version">
                 Version
               </label>
               <div className="inline-block relative w-full mb-3">
@@ -103,11 +103,11 @@ export default class Sidebar extends Component {
             </div>
 
             <div className="w-full px-3 mb-6">
-              <label className="block uppercase tracking-wide text-xs font-bold mb-2">
+              <label className="block uppercase tracking-wide text-xs font-bold mb-2" for="line_length">
                 Line Length
               </label>
               <input
-                type="text"
+                type="number"
                 name="line_length"
                 className="appearance-none block w-full border border-slate-900 rounded py-3 px-4 mb-3 leading-tight"
                 value={line_length}
@@ -131,7 +131,7 @@ export default class Sidebar extends Component {
               </label>
 
               {Object.keys(TARGET_VERSIONS).map((target) => (
-                <label className="block text-slate-500" key={target}>
+                <label className="block text-slate-500" for={target} key={target}>
                   <input
                     type="checkbox"
                     name={target}
